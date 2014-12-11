@@ -1,0 +1,22 @@
+body {
+	text-align: center;
+}
+
+h4 {
+	margin-top: 2em;
+}
+
+img {
+	display: block;
+	margin-left: auto;
+	margin-right:auto;
+}
+
+.footnote {
+	width: 70%;
+	margin: 0.5em auto 0.2em;
+	padding: 1em 2em;
+	border-style: solid;
+	border-width: 1px;
+	text-align: left;
+}

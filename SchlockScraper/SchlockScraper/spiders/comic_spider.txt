@@ -1,0 +1,6 @@
+import scrapy
+import datetime
+
+from SchlockScraper.Items import Comic
+
+class
