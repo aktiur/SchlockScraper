@@ -9,13 +9,8 @@ import markdown
 DATE_FORMAT = "%A %B %d, %Y"
 ORIGINAL_SITE = "http://www.schlockmercenary.com/"
 
-TOC_FILE = "SchlockScraper\\toc.json"
-COMICS_FILES = [
-	'SchlockScraper\\comics2000.json', 'SchlockScraper\\comics2001.json', 'SchlockScraper\\comics2002.json',
-	'SchlockScraper\\comics2003.json', 'SchlockScraper\\comics2004.json', 'SchlockScraper\\comics2005.json',
-	'SchlockScraper\\comics2006.json', 'SchlockScraper\\comics2007.json', 'SchlockScraper\\comics2008.json',
-	'SchlockScraper\\comics2009.json', 'SchlockScraper\\comics2010.json', 'SchlockScraper\\comics2011.json',
-	'SchlockScraper\\comics2012.json', 'SchlockScraper\\comics2013.json', 'SchlockScraper\\comics2014.json']
+TOC_FILE = "toc.json"
+COMICS_FILES = ['comics.json']
 
 def main():
 	books = import_toc()

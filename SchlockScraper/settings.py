@@ -20,7 +20,7 @@ FILES_RESULT_FIELD = 'images'
 
 FILES_EXPIRES = 3650
 
-FILES_STORE = "..\\images"
+FILES_STORE = "images"
 
 ITEM_PIPELINES = {'SchlockScraper.pipelines.SchlockPipeline':1}
 
