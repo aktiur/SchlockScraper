@@ -4,7 +4,8 @@ from __future__ import unicode_literals
 from datetime import datetime, date, timedelta
 import json
 from codecs import open
-import markdown
+
+import html_templates
 
 DATE_FORMAT = "%A %B %d, %Y"
 ORIGINAL_SITE = "http://www.schlockmercenary.com/"
@@ -56,27 +57,27 @@ def build_book(book, comics):
 	for c in comics:
 		cs += build_comic(c, chapters.get(c['date']))
 		
-	bs = BOOK_STRING.format(
+	bs = html_templates.BOOK.format(
 		book_number = book['number'],
 		book_title = book['title'],
 		comics = cs
 	)
-	return HTML5_TEMPLATE.format(
+	return html_templates.HTML5.format(
 		page_title = 'Book ' + unicode(book['number']) + ': ' + book['title'],
-		page_contents = markdown.markdown(bs)
+		page_contents = bs
 	)
 	
 	
 def build_comic(comic, chapter = None):
-	images = '\n'.join(map(lambda i: '![comic image](images/' + i['path'] + ')', comic['images']))
+	images = '\n'.join(map(lambda i: html_templates.IMAGE.format(path = i['path'], alt = 'comic images for ' +comic['date']), comic['images']))
 	if chapter:
-		chs = CHAPTER_STRING.format(
+		chs = html_templates.CHAPTER.format(
 			chapter_title = chapter['title'],
 			chapter_anchor = anchor_from_name(chapter['title'])
 		)
 	else:
 		chs = ''
-	return COMIC_STRING.format(
+	return html_templates.COMIC.format(
 		date_anchor = comic['date'],
 		date = datetime.strptime(comic['date'], '%Y-%m-%d').strftime(DATE_FORMAT),
 		images = images,
@@ -86,75 +87,7 @@ def build_comic(comic, chapter = None):
 		).lstrip()
 
 def anchor_from_name(name):
-	return name
-		
-# characters strings for toc
-
-TOC_STRING = """
-Schlock Mercenary offline!
-==========================
-
-Table of contents
------------------
-
-{books}
-""".lstrip()
-
-TOC_BOOK_STRING = """
-* [Book {book_number}: {book_title}]({book_link})
-{chapters}
-""".lstrip()
-
-TOC_CHAPTER_STRING = """
-    * [{chapter_title}]({chapter_link})
-""".lstrip()
-
-# character strings for books
-
-BOOK_STRING = """
-Schlock Mercenary offline!
-==========================
-
-## Book {book_number}: {book_title}
-
-<div id="bookmark">You don't have set a bookmark yet!</div>
-
-{comics}
-""".lstrip()
-
-CHAPTER_STRING = """
-### <a name="{chapter_anchor}"></a>{chapter_title}
-""".lstrip()
-
-COMIC_STRING = """
-{new_chapter}
-
-#### <a name="{date_anchor}" class="comic"></a>{date}
-
-{images}
-
-{footnote}
-
-<a href="#" class="setbookmark" data-anchor="{date_anchor}">Put bookmark here!</a> | [See original page]({original_link})
-
-""".lstrip()
-
-HTML5_TEMPLATE = """
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-	<title>{page_title}</title>
-	<link rel="stylesheet" type="text/css" href="resources/style.css">
-	<script src="resources/jquery-1.11.1.min.js"></script>
-	<script src="resources/jquery.scrollTo.min.js"></script>
-	<script src="resources/script.js"></script>
-</head>
-<body>
-{page_contents}
-</body>
-</html>
-""".lstrip()
+	return name.replace(' ', '_')
 
 if __name__ == '__main__':
 	main()
